@@ -31,6 +31,10 @@ class ViteLicense:
 
     @staticmethod
     def hash(data: dict):
+        try:
+            data.pop('public_ipaddress')
+        except:
+            pass
         return str(hashlib.md5(hashlib.md5(base64.b64encode(json.dumps(data).encode('utf-8'))).hexdigest().encode('utf-8')).hexdigest()).upper()
 
     @staticmethod
@@ -60,8 +64,7 @@ class ViteLicense:
                 computer_uuid = str(cmd("ioreg -d2 -c IOPlatformExpertDevice | awk -F\\\" '/IOPlatformUUID/{print $(NF-1)}'")).replace('.', '').replace('_', '').replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1]
             else:
                 computer_uuid = str(cmd('cat /sys/class/dmi/id/product_uuid')).replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1]
-        except Exception as e:
-            print(e)
+        except:
             computer_uuid = ''
 
         try:
