@@ -73,7 +73,7 @@ class ViteLicense:
             elif computer_platform == 'mac':
                 computer_system_uuid = str(cmd('sysctl -a | grep kern.uuid')).replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1].split(': ')[-1]
             else:
-                computer_system_uuid = str(cmd('wmic path win32_computersystemproduct get uuid')).replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1]
+                computer_system_uuid = str(cmd('cat /sys/class/dmi/id/product_serial')).replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1]
         except:
             computer_system_uuid = ''
 
@@ -85,7 +85,7 @@ class ViteLicense:
             elif computer_platform == 'mac':
                 computer_hard_disk_serial = str(cmd("ioreg -d2 -c IOPlatformExpertDevice | awk -F\\\" '/IOPlatformSerialNumber/{print $(NF-1)}'")).replace('.', '').replace('_', '').replace('\r', '\n').replace('\n\n', '\n').split('\n')[-1]
             else:
-                tmp = str(cmd('lsblk -o SERIAL')).replace('.', '').replace('_', '').replace('\r', '\n').replace('\n\n', '\n').split('\n')
+                tmp = str(cmd('lsblk -o SERIAL')).replace('SERIAL', '').replace('.', '').replace('_', '').replace('\r', '\n').replace('\n\n', '\n').split('\n')
                 computer_hard_disk_serial = list(filter(None, tmp))[0]
         except:
             computer_hard_disk_serial = ''
