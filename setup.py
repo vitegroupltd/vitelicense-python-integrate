@@ -12,7 +12,7 @@ with open(os.path.join(os.path.dirname(__file__), 'requirements.txt')) as f:
 
 setup(
     name='ViteLicense',
-    version='1.0.8',
+    version='1.0.9',
     description='A free Python module to help you integrate with vitelicense.io',
     long_description=long_description,
     long_description_content_type='text/markdown',
